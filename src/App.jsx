@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 
-class App extends Component {
+class App2 extends Component {
   state = { 
     count: 0,  
   }
@@ -16,5 +16,18 @@ class App extends Component {
     );
   }
 }
- 
+
+function App () {
+  const  [count, setCount] = useState(0);
+  const  [name, setName] = useState('Mike');
+
+  return ( 
+    <button
+      type="button"
+      onClick={() => {setCount(count + 1)}}>
+        Click ({count}), name ({name})
+    </button>
+  );
+}
+
 export default App;
