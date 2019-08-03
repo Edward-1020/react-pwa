@@ -17,15 +17,16 @@ class App2 extends Component {
   }
 }
 
-function App () {
-  const  [count, setCount] = useState(0);
-  const  [name, setName] = useState('Mike');
+function App (props) {
+  const  [count, setCount] = useState(() => {
+    return props.defaultCount || 0;
+  }); 
 
   return ( 
     <button
       type="button"
       onClick={() => {setCount(count + 1)}}>
-        Click ({count}), name ({name})
+        Click ({count})
     </button>
   );
 }
