@@ -1,41 +1,20 @@
-import React, { Component, PureComponent, memo} from 'react';
-import './App.css';
-
-const Foo = memo(function Foo (props) {
-  console.log('Foo render')
-  return (
-    <div>{props.person.age}</div>
-  );
-});
+import React, { Component } from 'react';
 
 class App extends Component {
-  state = {
-    count: 0,
-    person: {
-      age: 1
-    }
+  state = { 
+    count: 0,  
   }
+  render() {
+    const { count } = this.state;
 
-  callback = () => {}
-
-  render () {
-    const person = this.state.person;
-    return (
-      <div>
-        <button
-          onClick={() => {
-            person.age++;
-            this.setState({
-              count: this.state.count + 1
-            })
-          }}
-        >
-            Add
-        </button>
-        <Foo person={person} cb={this.callback}/>
-      </div>
+    return ( 
+      <button
+        type="button"
+        onClick={() => {this.setState({count: count + 1})}}>
+          Click ({count})
+      </button>
     );
   }
 }
-
+ 
 export default App;
