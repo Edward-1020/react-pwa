@@ -3,6 +3,12 @@ import React, { Component, useState } from 'react';
 class App2 extends Component {
   state = { 
     count: 0,  
+  };
+  componentDidMount () {
+    document.title = this.state.count;
+  }
+  componentDidUpdate () {
+    document.title = this.state.count;
   }
   render() {
     const { count } = this.state;
@@ -31,4 +37,4 @@ function App (props) {
   );
 }
 
-export default App;
+export default App2;
