@@ -1,21 +1,28 @@
 import React, {
   Component,
   useState,
-  useMemo
+  useMemo,
+  memo
 } from 'react';
 
-function Counter (props) {
+const Counter = memo(function Counter (props) {
+  console.log('Counter render');
+
   return (
-    <h1>{props.count}</h1>
+    <h1 onClick={props.onClick}>{props.count}</h1>
   )
-}
+});
 
 function App () {
   const  [count, setCount] = useState(0);
-
+ 
   const double = useMemo(() => {
     return count * 2;
-  }, [count]) 
+  }, [count === 3]) 
+
+  const onClick = useMemo(() => {
+    console.log('Click');
+  }, []);
 
   return ( 
     <div>
@@ -24,7 +31,7 @@ function App () {
         onClick={() => {setCount(count + 1)}}>
           Click ({count}), double: {double}
       </button>
-      <Counter count={count}/>  
+      <Counter count={double} onClick={onClick}/>  
     </div>
   );
 }
