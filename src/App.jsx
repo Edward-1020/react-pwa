@@ -9,26 +9,109 @@ import React, {
 
 import './App.css';
 
-function Control () {
-  return <div></div>
+let idSeq = Date.now();
+
+function Control ({
+  addTodo
+}) {
+  const inputRef = useRef();
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const newText = inputRef.current.value.trim();
+
+    if (newText.length === 0) {
+      return;
+    }
+
+    addTodo({
+      id: ++idSeq,
+      text: newText,
+      complete: false
+    });
+
+    inputRef.current.value = '';
+  }
+
+  return (
+    <div className="control">
+      <h1>
+        todos
+      </h1>
+      <form onSubmit={onSubmit}>
+        <input
+          type="text"
+          ref={inputRef}
+          className="new-todo"
+          placeholder="what needs to be done?"/>
+      </form>
+    </div>
+  )
 }
 
-function Todos () {
-  return <div></div>
+function TodoItem (props) {
+  const {
+    todo: {
+      id,
+      text,
+      complete
+    },
+    toggleTodo,
+    removeTodo
+  } = props;
+
+  const onChange = () => {
+    toggleTodo(id);
+  };
+  const onRemove = () => {
+    removeTodo(id);
+  };
+
+  return (
+    <li className="todo-item">
+      <input
+        type="checkbox"
+        onChange={onChange}
+        checked={complete}/>
+      <label className={complete ? 'complete' : ''}>{text}</label>
+      <button onClick={onRemove}>&#xd7;</button>
+    </li>
+  );
+}
+
+function Todos ({
+  todos,
+  toggleTodo,
+  removeTodo
+}) {
+  return (
+    <ul>
+      {
+        todos.map(todo => {
+          return <TodoItem
+            key={todo.id}
+            todo={todo}
+            toggleTodo={toggleTodo}
+            removeTodo={removeTodo}
+          />
+        })
+      }
+    </ul>
+  )
 }
 
 function TodoList () {
   const [todos, setTodos] = useState([]);
 
-  const addTodo = (todo) => {
+  const addTodo = useCallback((todo) => {
     setTodos(todos => [...todos, todo])
-  };
+  }, []);
 
-  const removeTodo = (id) => {
+  const removeTodo = useCallback((id) => {
     setTodos(todos => todos.filter(todo => todo.id !== id))
-  };
+  }, []);
 
-  const toggleTodo = (id) => {
+  const toggleTodo = useCallback((id) => {
     setTodos(todos => todos.map(todo => {
       return todo.id === id
         ? {
@@ -37,12 +120,15 @@ function TodoList () {
         }
         : todo;
     }))
-  };
+  }, []);
 
   return ( 
     <div className="todo-list">
       <Control addTodo={addTodo}/>
-      <Todos removeTodo={removeTodo} toggleTodo={toggleTodo}/>
+      <Todos
+        removeTodo={removeTodo}
+        toggleTodo={toggleTodo}
+        todos={todos}/>
     </div>
   );
 }
