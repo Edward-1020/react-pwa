@@ -1,6 +1,4 @@
 import React, {
-  Component,
-  PureComponent,
   useState,
   useEffect,
   useMemo,
@@ -9,72 +7,44 @@ import React, {
   useRef
 } from 'react';
 
-function useCounter (count) {
-  const size = useSize();
-  return (
-    <h1>{count} {size.width} * {size.height}</h1>
-  )
+import './App.css';
+
+function Control () {
+  return <div></div>
 }
 
-function useCount (defaultCount) {
-  const [count, setCount] = useState(defaultCount);
-  const it = useRef();
-  
-  
-  useEffect(() => {
-    it.current = setInterval(() => {
-      setCount(count => count + 1);
-    }, 1000)
-  }, []);
-  
-  useEffect(() => {
-    if (count >= 10) {
-      clearInterval(it.current);
-    }
-  })
-
-  return [count, setCount];
+function Todos () {
+  return <div></div>
 }
 
-function useSize () {
-  const [size, setSize] = useState({
-    width: document.documentElement.clientWidth,
-    height: document.documentElement.clientHeight
-  });
+function TodoList () {
+  const [todos, setTodos] = useState([]);
 
-  const onResize = useCallback(() => {
-    setSize({
-      width: document.documentElement.clientWidth,
-      height: document.documentElement.clientHeight
-    })
-  }, [])
+  const addTodo = (todo) => {
+    setTodos(todos => [...todos, todo])
+  };
 
-  useEffect(() => {
-    window.addEventListener('resize', onResize, false);
+  const removeTodo = (id) => {
+    setTodos(todos => todos.filter(todo => todo.id !== id))
+  };
 
-    return () => {
-      window.removeEventListener('resize', onResize, false);
-    }
-  }, [])
-
-  return size;
-}
-
-function App () {
-  const [count, setCount] = useCount(0);
-  const Counter = useCounter(count);
-  const size = useSize();
+  const toggleTodo = (id) => {
+    setTodos(todos => todos.map(todo => {
+      return todo.id === id
+        ? {
+          ...todo,
+          complete: !todo.complete
+        }
+        : todo;
+    }))
+  };
 
   return ( 
-    <div>
-      <button
-        type="button"
-        onClick={() => {setCount(count + 1)}}>
-          Click ({count}) {size.width} * {size.height}
-      </button>
-      {Counter}
+    <div className="todo-list">
+      <Control addTodo={addTodo}/>
+      <Todos removeTodo={removeTodo} toggleTodo={toggleTodo}/>
     </div>
   );
 }
 
-export default App;
+export default TodoList;
