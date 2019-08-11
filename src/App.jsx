@@ -100,6 +100,8 @@ function Todos ({
   )
 }
 
+const LS_KEY = '_$-todos_';
+
 function TodoList () {
   const [todos, setTodos] = useState([]);
 
@@ -121,6 +123,16 @@ function TodoList () {
         : todo;
     }))
   }, []);
+
+  useEffect(() => {
+    const todos = JSON.parse(localStorage.getItem(LS_KEY));
+    setTodos(todos);
+  }, [])
+  
+  useEffect(() => {
+    localStorage.setItem(LS_KEY, JSON.stringify(todos))
+  }, [todos])
+
 
   return ( 
     <div className="todo-list">
