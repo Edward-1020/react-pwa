@@ -11,7 +11,7 @@ import './App.css';
 
 let idSeq = Date.now();
 
-function Control ({
+const Control = memo(function Control ({
   addTodo
 }) {
   const inputRef = useRef();
@@ -47,9 +47,9 @@ function Control ({
       </form>
     </div>
   )
-}
+});
 
-function TodoItem (props) {
+const TodoItem = memo(function TodoItem (props) {
   const {
     todo: {
       id,
@@ -77,9 +77,9 @@ function TodoItem (props) {
       <button onClick={onRemove}>&#xd7;</button>
     </li>
   );
-}
+});
 
-function Todos ({
+const Todos = memo(function Todos ({
   todos,
   toggleTodo,
   removeTodo
@@ -98,7 +98,7 @@ function Todos ({
       }
     </ul>
   )
-}
+});
 
 const LS_KEY = '_$-todos_';
 
@@ -128,7 +128,7 @@ function TodoList () {
     const todos = JSON.parse(localStorage.getItem(LS_KEY));
     setTodos(todos);
   }, [])
-  
+
   useEffect(() => {
     localStorage.setItem(LS_KEY, JSON.stringify(todos))
   }, [todos])
