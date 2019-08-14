@@ -16,8 +16,6 @@ import {
 import reducer from './reducers'
 import './App.css';
 
-let idSeq = Date.now();
-
 function bindActionCreators(actionCreators, dispatch) {
   const ret = {};
 
@@ -45,11 +43,7 @@ const Control = memo(function Control ({
       return;
     }
 
-    addTodo({
-      id: ++idSeq,
-      text: newText,
-      complete: false        
-    });
+    addTodo(newText);
 
     inputRef.current.value = '';
   }
@@ -123,28 +117,40 @@ const Todos = memo(function Todos ({
 
 const LS_KEY = '_$-todos_';
 
+let store = {
+  todos: [],
+  incrementCount: 0
+}
+
 function TodoList () {
   const [todos, setTodos] = useState([]);
   const [incrementCount, setIncrementCount] = useState(0);
 
-  const dispatch = useCallback((action) => {
-    const state = {
+  useEffect(() => {
+    Object.assign(store, {
       todos,
       incrementCount
-    };
+    })
+  }, [todos, incrementCount])
 
+  const dispatch = (action) => {
     const setters = {
       todos: setTodos,
       incrementCount: setIncrementCount
     };
 
-    const newState = reducer(state, action);
+    if ('function' === typeof action) {
+      action(dispatch, () => store);
+      return;
+    }
+
+    const newState = reducer(store, action);
 
     for (let key in newState) {
       setters[key](newState[key]);
     }
 
-  }, [todos, incrementCount]);
+  };
 
   useEffect(() => {
     const todos = JSON.parse(localStorage.getItem(LS_KEY));
