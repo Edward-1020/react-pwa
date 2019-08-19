@@ -11,35 +11,35 @@ export const ACTION_SET_IS_DATE_SELECTOR_VISIBLE =
 export const ACTION_SET_HIGH_SPEED = 'SET_HIGH_SPEED';
 export const ACTION_SET_DEPART_DATE = 'SET_DEPART_DATE';
 
-export function setFrom (from) {
+export function setFrom(from) {
     return {
         type: ACTION_SET_FROM,
         payload: from,
     };
-};
+}
 
-export function setTo (to) {
+export function setTo(to) {
     return {
         type: ACTION_SET_TO,
         payload: to,
     };
-};
+}
 
-export function setIsLoadingCityData (isLoadingCityData) {
+export function setIsLoadingCityData(isLoadingCityData) {
     return {
         type: ACTION_SET_IS_LOADING_CITY_DATA,
         payload: isLoadingCityData,
     };
-};
+}
 
-export function setCityData (cityDate) {
+export function setCityData(cityDate) {
     return {
         type: ACTION_SET_CITY_DATA,
         payload: cityDate,
     };
-};
+}
 
-export function toggleHighSpeed () {
+export function toggleHighSpeed() {
     return (dispatch, getState) => {
         const { highSpeed } = getState();
         dispatch({
@@ -49,7 +49,7 @@ export function toggleHighSpeed () {
     };
 }
 
-export function showCitySelector (currentSelectingLeftCity) {
+export function showCitySelector(currentSelectingLeftCity) {
     return dispatch => {
         dispatch({
             type: ACTION_SET_IS_CITY_SELECTOR_VISIBLE,
@@ -63,14 +63,14 @@ export function showCitySelector (currentSelectingLeftCity) {
     };
 }
 
-export function hideCitySelector () {
+export function hideCitySelector() {
     return {
         type: ACTION_SET_IS_CITY_SELECTOR_VISIBLE,
         payload: false,
     };
 }
 
-export function setSelectedCity (city) {
+export function setSelectedCity(city) {
     return (dispatch, getState) => {
         const { currentSelectingLeftCity } = getState();
 
@@ -84,14 +84,14 @@ export function setSelectedCity (city) {
     };
 }
 
-export function showDateSelector () {
+export function showDateSelector() {
     return {
         type: ACTION_SET_IS_DATE_SELECTOR_VISIBLE,
         payload: true,
     };
 }
 
-export function hideDateSelector () {
+export function hideDateSelector() {
     return {
         type: ACTION_SET_IS_DATE_SELECTOR_VISIBLE,
         payload: false,

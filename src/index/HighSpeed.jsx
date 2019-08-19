@@ -2,7 +2,9 @@ import React from 'react';
 import './HighSpeed.css';
 
 const HighSpeed = () => {
-    return (  );
+    return (
+        <div></div>
+    );
 }
  
 export default HighSpeed;

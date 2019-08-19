@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import './App.css';
 import { connect } from 'react-redux';
 
@@ -8,21 +8,23 @@ import HighSpeed from './HighSpeed';
 import Journey from './Journey';
 import Submit from './Submit';
 
-function App (props) {
+function App(props) {
     return (
         <div>
-           <Header/>
-           <Journey/>
-           <DepartDate/>
-           <HighSpeed/>
-           <Submit/>
+            <Header />
+            <Journey />
+            <DepartDate />
+            <HighSpeed />
+            <Submit />
         </div>
-    )
+    );
 }
 
 export default connect(
-    function mapStateToProps (state) {
+    function mapStateToProps(state) {
+        return {};
     },
-    function mapDispatchToProps (dispatch) {
+    function mapDispatchToProps(dispatch) {
+        return {};
     }
 )(App);
